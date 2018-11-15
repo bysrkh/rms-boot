@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.1"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.1
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.1.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet author="bysrkh" id="00001">
-        <createTable name="USER">
-            <column name="ID" type="VARCHAR2(36)"/>
+        <createTable tableName="ROLE">
+            <column name="ID" type="VARCHAR(5)">
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="PK_ROLE"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(32)"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ROLE"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="bysrkh" id="00002">
+        <createTable tableName="USER">
+            <column name="ID" type="INT" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="PK_USER"/>
+            </column>
             <column name="USERNAME" type="VARCHAR(32)"/>
             <column name="PASSWORD" type="VARCHAR(32)"/>
+            <column name="ROLE_ID" type="VARCHAR(5)">
+                <constraints foreignKeyName="FK_USER_ROLE" referencedTableName="ROLE" referencedColumnNames="ID"/>
+            </column>
         </createTable>
-        <addPrimaryKey columnName="ID"
-                       constraintName="pk_user"
-                       tableName="USER"/>
         <rollback>
             <dropTable tableName="USER"/>
         </rollback>
     </changeSet>
 
-    <changeSet author="bysrkh" id="00002">
+    <changeSet author="bysrkh" id="00003">
+        <insert tableName="ROLE">
+            <column name="ID" value="ADMIN"/>
+            <column name="DESCRIPTION" value="Administrator"/>
+        </insert>
+        <insert tableName="ROLE">
+            <column name="ID" value="USER"/>
+            <column name="DESCRIPTION" value="User"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="bysrkh" id="00004">
             <insert tableName="USER">
-                <column name="ID" value="LIQUIBASE_DATABASE_MIGRATION_000001"/>
+                <column name="ID" value="1"/>
                 <column name="USERNAME" value="rmsadmin"/>
-                <column name="PASSWORD" valueDate="rmsadmin"/>
-                <column name="group_name" value="BlahBlah"/>
+                <column name="PASSWORD" value="rmsadmin"/>
+                <column name="ROLE_ID" value="ADMIN"/>
             </insert>
         </changeSet>
 </databaseChangeLog>

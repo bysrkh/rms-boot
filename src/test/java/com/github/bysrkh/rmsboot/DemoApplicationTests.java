@@ -1,4 +1,4 @@
-package com.example.rmsboot;
+package com.github.bysrkh.rmsboot;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- Meta Tag Description -->
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Page Title -->
+        <title th:text="#{page.title.user.form}">User | Form</title>
+    </head>
+    <body>
+    <h2>Item List</h2>
+        <div>
+            <form class="form-horizontal" action="itemForm.html" th:action="@{${#httpServletRequest.servletPath}}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="username" th:text="#{form.label.user.username}">Username</label>
+                    <div class="col-sm-9">
+                        <input id="username" type="text" name="username" th:field="*{username}"/>
+                    </div>
+                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Fill it</p>
+                </div>
+                <div class="form-group">
+                    <label for="password" th:text="#{form.label.user.password}">Password</label>
+                    <div class="col-sm-9">
+                        <input id="password" type="text" name="password" th:field="*{password}"/>
+                    </div>
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Fill it</p>
+                </div>
+                <div class="form-group">
+                    <label for="category" th:text="#{form.label.user.role}">Role</label>
+                    <div class="col-sm-9">
+                        <select id="category" class="form-control" th:field="*{role}">
+                            <option th:each="role : ${roles}" value="SIN" th:value="${{role}}" th:text="${role.description}">Buku Gambar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button class="btn btn-primary" type="submit" name="save" th:text="#{form.button.user.submit}">Save</button>
+                        <button class="btn btn-default" type="submit" name="cancel" th:text="#{form.button.user.cancel}">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

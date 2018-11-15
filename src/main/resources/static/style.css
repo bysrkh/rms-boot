@@ -1,0 +1,10 @@
+ul#menubar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul#menubar > li a {
+    display: inline-block;
+    width: 60px;
+}

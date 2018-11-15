@@ -1,8 +1,8 @@
 liquibase:
-  change-log: classpath:/db/db.changelog-master.xml
+  change-log: classpath:db/db.changelog-master.xml
   password: rms
-  url: jdbc:h2:mem:rmsdb
-  user: rmsdb
+  url: jdbc:h2:mem:rms
+  user: rms
 
 ---
 spring:
@@ -14,7 +14,7 @@ spring:
 ---
 spring:
   datasource:
-    url: jdbc:h2:mem:rmsdb;
+    url: jdbc:h2:mem:rms;DB_CLOSE_ON_EXIT=FALSE;
     username: rms
     password: rms
     driver-class-name: org.h2.Driver
@@ -24,4 +24,15 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-        ddl-auto: none
+        hbm2ddl:
+          auto: validate
+
+---
+spring:
+  messages:
+    basename: i18n/message_en
+
+---
+spring:
+  mvc:
+    locale: en

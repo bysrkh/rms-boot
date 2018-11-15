@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.1
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.1.xsd">
+    <changeSet author="bysrkh" id="00001">
+        <createTable name="USER">
+            <column name="ID" type="VARCHAR2(36)"/>
+            <column name="USERNAME" type="VARCHAR(32)"/>
+            <column name="PASSWORD" type="VARCHAR(32)"/>
+        </createTable>
+        <addPrimaryKey columnName="ID"
+                       constraintName="pk_user"
+                       tableName="USER"/>
+        <rollback>
+            <dropTable tableName="USER"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="bysrkh" id="00002">
+            <insert tableName="USER">
+                <column name="ID" value="LIQUIBASE_DATABASE_MIGRATION_000001"/>
+                <column name="USERNAME" value="rmsadmin"/>
+                <column name="PASSWORD" valueDate="rmsadmin"/>
+            </insert>
+        </changeSet>
+</databaseChangeLog>

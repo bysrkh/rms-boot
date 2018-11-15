@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+        <!-- Meta Tag Description -->
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{/style.css}"/>
+
+        <!-- Page Title -->
+        <title th:text="#{page.title.user.list}">User | List</title>
+    </head>
+    <body>
+        <h2>Item List</h2>
+        <ul id="menubar">
+            <li><a href="/itemForm.html" th:href="@{/user/add}">Create User</a></li>
+            <li sec:authorize="isAuthenticated()">
+                <a href="#">Welcome, <span sec:authentication="name"/></a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <form action="loginForm.html" th:action="@{/logout}" method="post">
+                    <button class="btn btn-link navbar-btn" type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+        <div>
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+                <tr th:each="user: ${users}">
+                    <td th:text="${user.username}">Rizka Julia</td>
+                    <td th:text="${user.password}">Rizka Lover</td>
+                    <td th:text="${user.role.description}">Administration</td>
+                    <td>
+                        <a href="/userForm.html" th:href="@{/user/edit(id=${user.id})}">Edit</a>
+                        <a href="/userList.html" th:href="@{/user/remove(id=${user.id})}">Remove</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
